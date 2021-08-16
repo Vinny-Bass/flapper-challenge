@@ -11,7 +11,7 @@ export default abstract class CreateQuoteUseCase implements IUseCase<CreateQuote
 
   private calculateCubedWeight(data: CreateQuoteDTO['shipment']): number {
     const cubageFactor = (parseInt(process.env.CUBAGE_FACTOR || "") || 6000);
-    return (data.height * data.length * data.width) / cubageFactor;
+    return parseFloat(((data.height * data.length * data.width) / cubageFactor).toFixed(2));
   }
 
   public async execute(data: CreateQuoteDTO): Promise<ShipmentEntity> {

@@ -11,6 +11,11 @@ export default class QuotesRepository implements IShipmentData {
   }
 
   public async createQuote(data: CreateQuoteDTO): Promise<ShipmentEntity> {
-    return this.repository.create(data);
+    const newQuote = {
+      customerID: data.customer.customerID,
+      ...data.shipment,
+      ...data.transport
+    }
+    return this.repository.create(newQuote);
   }
 }
