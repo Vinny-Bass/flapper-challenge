@@ -1,9 +1,17 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
+import '@providers/database/typeorm/connection';
+import { json } from 'body-parser';
+import { errors } from 'celebrate';
+import cors from 'cors';
+import routes from '@infra/shared/routes';
+import ApplicationError from '@infra/shared/middlewares/AplicationError';
 
 const app = express();
 
-app.get('/', (req, res) => {
-  return res.json({ message: "Hello World!" });
-})
+app.use(json());
+app.use(cors());
+app.use(routes);
+app.use(errors());
+app.use(ApplicationError);
 
-app.listen(3000);
+export default app;

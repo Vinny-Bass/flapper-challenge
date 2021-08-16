@@ -22,7 +22,8 @@
       "@core/*": ["core/*"],
       "@domain/*": ["domain/*"],
       "@infra/*": ["infra/*"],
-      "@tests/*": ["tests/*"]
+      "@tests/*": ["tests/*"],
+      "@app": ["app.ts"]
     }
   },
   "exclude": ["node_modules"]

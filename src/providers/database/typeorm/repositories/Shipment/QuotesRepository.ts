@@ -16,6 +16,8 @@ export default class QuotesRepository implements IShipmentData {
       ...data.shipment,
       ...data.transport
     }
-    return this.repository.create(newQuote);
+    const quote = this.repository.create(newQuote);
+
+    return this.repository.save(quote);
   }
 }

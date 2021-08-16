@@ -19,6 +19,8 @@ export default class CustomerRepository implements ICustomerData {
   }
 
   public async createCustomer(data: CreateCustomerDTO): Promise<CustomerEntity> {
-    return this.repository.create(data);
+    const customer = this.repository.create(data);
+
+    return this.repository.save(customer);
   }
 }

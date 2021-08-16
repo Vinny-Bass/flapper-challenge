@@ -5,7 +5,7 @@
   "author": "Vinicius Vieira",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --respawn src/app.ts",
+    "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/infra/server.ts",
     "start": "node dist/app.js",
     "test": "jest --no-cache",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli"
@@ -29,6 +29,9 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "@types/cors": "^2.8.12",
+    "celebrate": "^15.0.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",

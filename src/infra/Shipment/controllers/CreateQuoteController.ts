@@ -1,10 +1,15 @@
 import { CreateQuoteDTO } from "@domain/Shipment/data/IShipmentData";
-import ShipmentEntity from "@domain/Shipment/entity/ShipmentEntity";
-import CreateQuoteFactoryFake from "../../../../tests/Shipment/factory/CreateQuoteFactoryFake";
+import { Request, Response } from 'express';
+import CreateQuoteFactory from "../factory/CreateQuoteFactory";
 
 export default class CreateQuoteController {
-  public async handle(data: CreateQuoteDTO): Promise<ShipmentEntity> {
-    const createQuoteFactory = new CreateQuoteFactoryFake();
-    return createQuoteFactory.execute(data);
+  public async handle(request: Request, response: Response): Promise<Response> {
+    const createQuoteFactory = new CreateQuoteFactory();
+
+    const data: CreateQuoteDTO = request.body;
+
+    const quote = await createQuoteFactory.execute(data);
+
+    return response.json(quote);
   }
 }
