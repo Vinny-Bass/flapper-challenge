@@ -1,6 +1,5 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
-import { hash } from 'bcrypt';
-
+import { scryptSync } from 'crypto';
 export class CreateUsersTable1629205653831 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
@@ -28,8 +27,7 @@ export class CreateUsersTable1629205653831 implements MigrationInterface {
             })
         );
 
-        const passHash = await hash('123456', 8);
-
+        const passHash = scryptSync('123456', 'test-salt', 32).toString("hex");
         await queryRunner.query(`INSERT INTO users (email, password) VALUES ('teste@teste.com', '${passHash}')`);
     }
 
