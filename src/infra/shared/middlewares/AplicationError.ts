@@ -1,13 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import AppError from '@core/AppError';
 
-interface IErro extends Error {
-  statusCode: number;
-  type: string;
-}
 
 const ApplicationError = (
-  err: IErro,
+  err: Error,
   _request: Request,
   response: Response,
   _: NextFunction,
@@ -18,14 +14,8 @@ const ApplicationError = (
     });
   }
 
-  if (err.statusCode === 400) {
-    return response.status(err.statusCode).json({
-      message: err.message,
-    });
-  }
-
   return response.status(500).json({
-    message: 'Internal server error',
+    message: 'Internal server error ' + err.message,
   });
 };
 

@@ -1,9 +1,14 @@
-import { AuthUserDTO, AuthUserResponse } from "@domain/User/data/IUserData";
+import { AuthUserDTO } from "@domain/User/data/IUserData";
+import { Request, Response } from "express";
 import AuthUserFactory from "../factory/AuthUserFactory";
 
 export default class AuthUserController {
-  public async handle({ email, password }: AuthUserDTO): Promise<AuthUserResponse> {
+  public async handle(request: Request, response: Response): Promise<Response> {
+    const { email, password }: AuthUserDTO = request.body;
     const authUserFactory = new AuthUserFactory();
-    return authUserFactory.execute({ email, password });
+    const userToken = await authUserFactory.execute({ email, password });
+    return response.json({
+      token: userToken.token
+    })
   }
 }

@@ -1,4 +1,5 @@
 import express from 'express';
+import 'express-async-errors';
 import '@providers/database/typeorm/connection';
 import { json } from 'body-parser';
 import { errors } from 'celebrate';

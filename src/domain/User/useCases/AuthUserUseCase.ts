@@ -2,6 +2,7 @@ import IUseCase from "@core/IUseCase";
 import IUserData, { AuthUserDTO, AuthUserResponse } from "../data/IUserData";
 import { scryptSync } from 'crypto';
 import { sign } from 'jsonwebtoken';
+import AppError from "@core/AppError";
 
 export default abstract class AuthUserUseCase implements IUseCase<AuthUserDTO, AuthUserResponse> {
   constructor(
@@ -14,7 +15,7 @@ export default abstract class AuthUserUseCase implements IUseCase<AuthUserDTO, A
     const user = await this.userProvider.findUser({ email, password: passHash});
 
     if (!user) {
-      throw new Error("Email or password are incorrect");
+      throw new AppError("Email or password are incorrect", 401);
     }
 
     const token = sign({}, "test-hash", {
