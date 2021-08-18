@@ -2,9 +2,11 @@ import { celebrate, Joi, Segments } from "celebrate";
 import { Router } from "express";
 import CreateQuoteController from "../controllers/CreateQuoteController";
 import { ensureAuthenticated, authRequestValidation } from "@infra/shared/middlewares/Authentication";
+import ListQuotesController from "../controllers/ListQuotesController";
 
 const shipmentRouter = Router();
 const createQuoteController = new CreateQuoteController();
+const listQuotesController = new ListQuotesController();
 
 shipmentRouter.post(
   '/create',
@@ -30,6 +32,19 @@ shipmentRouter.post(
     })
   }),
   createQuoteController.handle
+);
+
+shipmentRouter.get(
+  '/list',
+  authRequestValidation,
+  ensureAuthenticated,
+  celebrate({
+    [Segments.QUERY]: {
+      limit: Joi.number().greater(0).required(),
+      offset: Joi.number().required()
+    }
+  }),
+  listQuotesController.handle
 );
 
 export default shipmentRouter;
