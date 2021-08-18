@@ -8,7 +8,7 @@ interface IErro extends Error {
 
 const ApplicationError = (
   err: IErro,
-  request: Request,
+  _request: Request,
   response: Response,
   _: NextFunction,
 ) => {

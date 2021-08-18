@@ -18,7 +18,7 @@ export default abstract class AuthUserUseCase implements IUseCase<AuthUserDTO, A
     }
 
     const token = sign({}, "test-hash", {
-      subject: user.id.toString(),
+      subject: user.email,
       expiresIn: "1d"
     });
 

@@ -1,12 +1,15 @@
 import { celebrate, Joi, Segments } from "celebrate";
 import { Router } from "express";
 import CreateQuoteController from "../controllers/CreateQuoteController";
+import { ensureAuthenticated, authRequestValidation } from "@infra/shared/middlewares/Authentication";
 
 const shipmentRouter = Router();
 const createQuoteController = new CreateQuoteController();
 
 shipmentRouter.post(
   '/create',
+  authRequestValidation,
+  ensureAuthenticated,
   celebrate({
     [Segments.BODY]: Joi.object().required().keys({
       customer: Joi.object().keys({
