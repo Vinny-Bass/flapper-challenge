@@ -3,6 +3,9 @@ import {MigrationInterface, QueryRunner, Table, TableIndex} from "typeorm";
 export class CreateCustomerTable1628786455511 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
+
+        await queryRunner.createDatabase("flapper")
+        
         await queryRunner.createTable(
             new Table({
                 name: "customer",

@@ -40,15 +40,22 @@ Essa API também foi construida pensando em TDD por isso é fácil realizar test
 
 Essa API utiliza docker que roda a aplicação e o banco de dados, para rodar basta rodar os comandos abaixo:
 
-Suba os containers do docker (é preciso ter o docker instalado na sua maquina, e garantir que as portas 3000 3 3306 da sua maquina estejam livres)
+Instale as dependencias
+```sh
+yarn
+```
+
+Suba os containers do docker (é preciso ter o docker instalado na sua maquina, e garantir que as portas 3000 e 3306 da sua maquina estejam livres)
 ```sh
 docker-compose up -d
 ```
+(Voce pode acompanhar melhor tirando o parametro -d, e acompanhar os logs, a conexão estará de pé uma vez que o log `Connection stabelish` for printado)
 
-Verifique se deu tudo certo rodando, devem aparecer duas imagens rodando
+Verifique se deu tudo certo rodando o comando abaixo
 ```sh
 docker ps
 ```
+Devem aparecer duas imagens listadas.
 
 Agora rode as migrations
 ```sh
@@ -59,12 +66,12 @@ yarn run-migrations
 
 Uma vez que a aplicação estiver de pé e com as migrations já executadas, primeiro é necessario obter um token de autenticação, para isso basta bater na seguinte rota:
 
-`/user/auth` -> passe os seguintes parametros no body 
+`POST /user/auth` -> passe os seguintes parametros no body 
 `{ "email": "teste@teste.com", "password": "123456"}` (este user já terá sido previamente criado nas migrations)
 
-Voce recebera um token, com o token voce pode bater nas seguintes rotas:
+Voce recebera um token de auth, com o token voce pode bater nas seguintes rotas passando este token como um `Bearer Token`:
 
-`/quotes/create Create Quote` -> passe os seguintes parametros, a resposta será os dados da cotação junto com o peso cubado calculado
+`POST /quotes/create Create Quote` -> passe os seguintes parametros, a resposta será os dados da cotação junto com o peso cubado calculado e um customerID
 ```ssh
 {
 	"customer": {
@@ -85,8 +92,8 @@ Voce recebera um token, com o token voce pode bater nas seguintes rotas:
 }
 ```
 
-`/quotes/list List Quotes` -> passe os parametros limit e offset na querystring, voce recebera uma lista de cotações
-`/quotes/list/:customerID List Quotes by customer ID` -> passe os parametros limit e offset na querystring, passe um customer ID no path, voce recebera uma lista de cotações deste customerID
+`GET /quotes/list List Quotes` -> passe os parametros limit e offset na querystring, voce recebera uma lista de cotações
+`GET /quotes/list/:customerID List Quotes by customer ID` -> passe os parametros limit e offset na querystring, passe um customer ID no path, voce recebera uma lista de cotações deste customerID
 
 
 ### Como rodar os testes
