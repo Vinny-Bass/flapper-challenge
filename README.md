@@ -57,6 +57,12 @@ docker ps
 ```
 Devem aparecer duas imagens listadas.
 
+Uma vez que as imagens estiverem de pé é necessario se conectar ao banco de dados e criar o database da flapper.
+```sh
+mysql -h 127.0.0.1 -u root -psecret
+CREATE DATABASE flapper;
+```
+
 Agora rode as migrations
 ```sh
 yarn run-migrations
