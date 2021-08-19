@@ -1,7 +1,7 @@
 import { celebrate, Joi, Segments } from "celebrate";
 import { Router } from "express";
 import CreateQuoteController from "../controllers/CreateQuoteController";
-import { ensureAuthenticated, authRequestValidation, ensureUserIntegrity } from "@infra/shared/middlewares/Authentication";
+import { ensureAuthenticated, authRequestValidation } from "@infra/shared/middlewares/Authentication";
 import ListQuotesController from "../controllers/ListQuotesController";
 import ListQuotesByCustomerIDController from "../controllers/ListQuotesByCustomerIDController";
 
@@ -52,7 +52,7 @@ shipmentRouter.get(
 shipmentRouter.get(
   '/list/:customerID',
   authRequestValidation,
-  ensureUserIntegrity,
+  ensureAuthenticated,
   celebrate({
     [Segments.PARAMS]: {
       customerID: Joi.number().required()
