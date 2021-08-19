@@ -1,4 +1,4 @@
-import IShipmentData, { ListQuotesDTO } from "@domain/Shipment/data/IShipmentData";
+import IShipmentData, { ListQuotesByCustomerIDDTO, ListQuotesDTO } from "@domain/Shipment/data/IShipmentData";
 import ShipmentEntity from "@domain/Shipment/entity/ShipmentEntity";
 import { CreateQuoteDTO } from "@domain/Shipment/data/IShipmentData";
 
@@ -19,5 +19,9 @@ export default class FakeQuotesRepository implements IShipmentData {
 
   public async listQuotes(_data: ListQuotesDTO): Promise<ShipmentEntity[]> {
     return this.quotes;
+  }
+
+  public async listQuotesByCustomerID(data: ListQuotesByCustomerIDDTO): Promise<ShipmentEntity[]> {
+    return this.quotes.filter(quote => quote.customerID === data.customerID);
   }
 }

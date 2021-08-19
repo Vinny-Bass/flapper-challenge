@@ -32,9 +32,40 @@ export async function ensureAuthenticated(
 
     const findUserByEmailUseCase = new FindUserByEmailFactory();
 
-    const user = await findUserByEmailUseCase.execute(userEmail) ;
+    const user = await findUserByEmailUseCase.execute(userEmail);
 
     if(!user) throw new AppError("User do not exists");
+
+    next();
+  } catch (err){
+    throw new AppError("Invalid Token")
+  }
+}
+
+export async function ensureUserIntegrity(
+  request: Request,
+  _response: Response,
+  next: NextFunction
+): Promise<void> {
+  const authHeader = request.headers.authorization;
+  const { customerID } = request.params;
+
+  if(!authHeader) {
+    throw new AppError("Token is missign");
+  }
+
+  const [, token] = authHeader.split(" ");
+
+  try {
+    const { sub: userEmail }  = verify(token, 'test-hash') as IPayload;
+
+    const findUserByEmailUseCase = new FindUserByEmailFactory();
+
+    const user = await findUserByEmailUseCase.execute(userEmail);
+
+    if(!user) throw new AppError("User do not exists");
+
+    if(user.id !== parseInt(customerID)) throw new AppError("Invalid Token");
 
     next();
   } catch (err){

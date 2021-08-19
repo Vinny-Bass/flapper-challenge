@@ -24,7 +24,14 @@ export type ListQuotesDTO = {
   offset: number;
   limit: number;
 }
+
+export type ListQuotesByCustomerIDDTO = {
+  customerID: number;
+  offset: number;
+  limit: number;
+}
 export default interface IShipmentData {
   createQuote(data: CreateQuoteDTO): Promise<ShipmentEntity>;
-  listQuotes(data: ListQuotesDTO): Promise<ShipmentEntity[]>
+  listQuotes(data: ListQuotesDTO): Promise<ShipmentEntity[]>;
+  listQuotesByCustomerID(data: ListQuotesByCustomerIDDTO): Promise<ShipmentEntity[]>;
 }
