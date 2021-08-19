@@ -3,7 +3,19 @@ import ShipmentEntity from "@domain/Shipment/entity/ShipmentEntity";
 import { CreateQuoteDTO } from "@domain/Shipment/data/IShipmentData";
 
 export default class FakeQuotesRepository implements IShipmentData {
-  private quotes: ShipmentEntity[] = [];
+  private quotes: ShipmentEntity[] = [
+    {
+      id: 1,
+      customerID: 1,
+      height: 20,
+      length: 30,
+      weight: 40,
+      width: 20,
+      cubedWeight: 1.40,
+      destinyCity: 'SP',
+      originCity: 'RJ'
+    }
+  ];
 
   public async createQuote(data: CreateQuoteDTO): Promise<ShipmentEntity> {
     const newQuote = {
