@@ -63,8 +63,10 @@ mysql -h 127.0.0.1 -u root -psecret
 CREATE DATABASE flapper;
 ```
 
-Agora rode as migrations
+Agora que o database existe derrube e suba os containers e rode as migrations
 ```sh
+docker-compose down
+docker-compose up -d
 yarn run-migrations
 ```
 
