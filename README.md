@@ -47,7 +47,7 @@ yarn
 
 Suba os containers do docker (é preciso ter o docker instalado na sua maquina, e garantir que as portas 3000 e 3306 da sua maquina estejam livres)
 ```sh
-docker-compose up -d
+docker-compose up -d --build
 ```
 (Voce pode acompanhar melhor tirando o parametro -d, e acompanhar os logs, a conexão estará de pé uma vez que o log `Connection stabelish` for printado)
 
